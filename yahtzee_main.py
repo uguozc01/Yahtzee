@@ -53,9 +53,6 @@ def main():
     dice1 = Roll()
     time.sleep(250 / 1000)
 
-    k = 30
-    dash = '-' * 53
-
     # First (upper) part of the game starts here
     for i in range(len(upper)):
 
@@ -77,20 +74,14 @@ def main():
 
         player1.create_log2("FINAL ROLL COLLECTION: ",final_collection)
         player1.create_log("NOW WHICH GAME ", "DO YOU WANT TO CHOOSE?", 50)
-
-        for key, value in upper_comp.items():
-            print(f'{value} :  {key}'.rjust(k))
-            print(f'|{dash}|')
+        player1.print_games(upper_comp)
 
         keep_game_no = input()
 
         if keep_game_no:
             if keep_game_no not in upper_comp.keys():
                 player1.create_log("THE CHOISE NOT IN THE LIST, ", "PLEASE CHOOSE AGAIN! ", 50)
-
-                for key, value in upper_comp.items():
-                    print(f'{value} :  {key}'.rjust(k))
-                    print(f'|{dash}|')
+                player1.print_games(upper_comp)
 
                 keep_game_no = input()
                 if keep_game_no:
@@ -100,7 +91,6 @@ def main():
                         check_score1 = dice1.upper_calc(final_collection, int(lost_turn_key))
                         player1.add_rolled(lost_turn_value, check_score1)
                         player1.add_top_score(check_score1)
-
                         upper_comp.popitem()
                         player1.create_log("YOU NOW LOST ONE OF YOUR GAME TURNS: ",lost_turn_value,50)
                         continue
@@ -120,10 +110,10 @@ def main():
                     player1.add_top_score(check_score1)
                     # Remove the played game from dict comprehension
                     upper_comp.popitem()
+
                     player1.create_log("NOTHING ENTERED, YOUR LAST GAME IS NOW REMOVED, ", "UPDATED REMAINING GAME LIST:", 50)
-                    for key, value in upper_comp.items():
-                        print(f'{value} :  {key}'.rjust(k))
-                        print(f'|{dash}|')
+                    player1.print_games(upper_comp)
+
             else:
                 print(f'\tYou Have Chosen  >----->  {upper_comp[keep_game_no]}\n\n')
                 item = upper_comp[keep_game_no]
@@ -139,10 +129,9 @@ def main():
             player1.add_rolled(lost_turn_value, check_score1)
             player1.add_top_score(check_score1)
             upper_comp.popitem()
+
             player1.create_log("NOTHING ENTERED, YOUR LAST GAME IS NOW REMOVED, ", "UPDATED REMAINING GAME LIST:", 50)
-            for key, value in upper_comp.items():
-                print(f'{value} :  {key}'.rjust(k))
-                print(f'|{dash}|')
+            player1.print_games(upper_comp)
 
     player1.add_top_bonus()
     time.sleep(250 / 1000)
@@ -169,20 +158,16 @@ def main():
 
         player1.create_log2("FINAL ROLL COLLECTION: ",final_collection)
         player1.create_log("NOW WHICH GAME ", "DO YOU WANT TO CHOOSE?", 50)
+        player1.print_games(lower_comp)
 
-        for key, value in lower_comp.items():
-            print(f'{value} :  {key}'.rjust(k))
-            print(f'|{dash}|')
 
         keep_game_no = input()
 
         if keep_game_no:
             if keep_game_no not in lower_comp.keys():
                 player1.create_log("THE CHOISE NOT IN THE LIST, ", "PLEASE CHOOSE AGAIN! ", 50)
+                player1.print_games(lower_comp)
 
-                for key, value in lower_comp.items():
-                    print(f'{value} :  {key}'.rjust(k))
-                    print(f'|{dash}|')
                 keep_game_no = input()
                 if keep_game_no:
                     if keep_game_no not in lower_comp.keys():
@@ -207,10 +192,10 @@ def main():
                     player1.add_rolled(lost_turn_value, check_score2)
                     player1.add_bottom_score(check_score2)
                     lower_comp.popitem()
+
                     player1.create_log("NOTHING ENTERED, YOUR LAST GAME IS NOW REMOVED, ", "UPDATED REMAINING GAME LIST:", 50)
-                    for key, value in lower_comp.items():
-                        print(f'{value} :  {key}'.rjust(k))
-                        print(f'|{dash}|')
+                    player1.print_games(lower_comp)
+
             else:
                 print(f'\tYou Have Chosen  >----->  {lower_comp[keep_game_no]}\n\n')
                 item = lower_comp[keep_game_no]
@@ -225,11 +210,10 @@ def main():
             player1.add_rolled(lost_turn_value, check_score2)
             player1.add_bottom_score(check_score2)
             lower_comp.popitem()
-            player1.create_log("NOTHING ENTERED, YOUR LAST GAME IS NOW REMOVED, ", "UPDATED REMAINING GAME LIST:", 50)
 
-            for key, value in lower_comp.items():
-                print(f'{value} :  {key}'.rjust(k))
-                print(f'|{dash}|')
+            player1.create_log("NOTHING ENTERED, YOUR LAST GAME IS NOW REMOVED, ", "UPDATED REMAINING GAME LIST:", 50)
+            player1.print_games(lower_comp)
+
     player1.add_bottom_bonus()
     player1.print_scoreboard()
 

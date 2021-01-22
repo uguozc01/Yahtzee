@@ -64,7 +64,6 @@ class Player:
         return self._bottom_score
 
     def print_scoreboard(self):
-        'Printing all the values in the scoreboard.'
 
         print(f'|{self.dash}|')
         for key, value in self._scoreboard.items():
@@ -80,15 +79,22 @@ class Player:
         print(f'|{"GRAND TOTAL":>25} : {self._total_score:<25}|')
         print(f'|{self.underscore}|')
 
-    # Logging - Could actually use decorator to make only one method
     def create_log(self,message_log,param1,param2):
+        
         print(f'|{self.dash}|')
         print(f'|   {message_log:<{param2}}|')
         print(f'|   {param1:<{param2}}|')
         print(f'|{self.dash}|')
 
     def create_log2(self,parameter1,parameter2):
+
         print(f'|{self.underscore}|')
         print('|                                                     |')
         print(f'|   {parameter1}{parameter2}            |')
         print(f'|{self.underscore}|')
+
+    def print_games(self, game_dict):
+
+        for key, value in game_dict.items():
+            print(f'|{value:>25} : {key:<25}|')
+            print(f'|{self.dash}|')
