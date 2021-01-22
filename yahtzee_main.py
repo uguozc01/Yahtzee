@@ -6,7 +6,6 @@ from yahtzee_roll import Roll
 
 def main():
 
-    k = 30
     upper = {
         "1" : "ACES",
         "2" : "TWOS",
@@ -46,9 +45,16 @@ def main():
         else:
             player1 = Player(player_name)
             player1.create_log("Wellcome ",player_name,50)
+    else:
+        player_name = 'DUMMY_PLAYER'
+        player1 = Player(player_name)
+        player1.create_log("Wellcome ",player_name,50)
 
     dice1 = Roll()
     time.sleep(250 / 1000)
+
+    k = 30
+    dash = '-' * 53
 
     # First (upper) part of the game starts here
     for i in range(len(upper)):
@@ -74,7 +80,7 @@ def main():
 
         for key, value in upper_comp.items():
             print(f'{value} :  {key}'.rjust(k))
-            print('|-----------------------------------------------------|')
+            print(f'|{dash}|')
 
         keep_game_no = input()
 
@@ -84,7 +90,7 @@ def main():
 
                 for key, value in upper_comp.items():
                     print(f'{value} :  {key}'.rjust(k))
-                    print('|-----------------------------------------------------|')
+                    print(f'|{dash}|')
 
                 keep_game_no = input()
                 if keep_game_no:
@@ -117,7 +123,7 @@ def main():
                     player1.create_log("NOTHING ENTERED, YOUR LAST GAME IS NOW REMOVED, ", "UPDATED REMAINING GAME LIST:", 50)
                     for key, value in upper_comp.items():
                         print(f'{value} :  {key}'.rjust(k))
-                        print('|-----------------------------------------------------|')
+                        print(f'|{dash}|')
             else:
                 print(f'\tYou Have Chosen  >----->  {upper_comp[keep_game_no]}\n\n')
                 item = upper_comp[keep_game_no]
@@ -136,7 +142,7 @@ def main():
             player1.create_log("NOTHING ENTERED, YOUR LAST GAME IS NOW REMOVED, ", "UPDATED REMAINING GAME LIST:", 50)
             for key, value in upper_comp.items():
                 print(f'{value} :  {key}'.rjust(k))
-                print('|-----------------------------------------------------|')
+                print(f'|{dash}|')
 
     player1.add_top_bonus()
     time.sleep(250 / 1000)
@@ -166,7 +172,7 @@ def main():
 
         for key, value in lower_comp.items():
             print(f'{value} :  {key}'.rjust(k))
-            print('|-----------------------------------------------------|')
+            print(f'|{dash}|')
 
         keep_game_no = input()
 
@@ -176,7 +182,7 @@ def main():
 
                 for key, value in lower_comp.items():
                     print(f'{value} :  {key}'.rjust(k))
-                    print('|-----------------------------------------------------|')
+                    print(f'|{dash}|')
                 keep_game_no = input()
                 if keep_game_no:
                     if keep_game_no not in lower_comp.keys():
@@ -204,7 +210,7 @@ def main():
                     player1.create_log("NOTHING ENTERED, YOUR LAST GAME IS NOW REMOVED, ", "UPDATED REMAINING GAME LIST:", 50)
                     for key, value in lower_comp.items():
                         print(f'{value} :  {key}'.rjust(k))
-                        print('|-----------------------------------------------------|')
+                        print(f'|{dash}|')
             else:
                 print(f'\tYou Have Chosen  >----->  {lower_comp[keep_game_no]}\n\n')
                 item = lower_comp[keep_game_no]
@@ -223,7 +229,7 @@ def main():
 
             for key, value in lower_comp.items():
                 print(f'{value} :  {key}'.rjust(k))
-                print('|-----------------------------------------------------|')
+                print(f'|{dash}|')
     player1.add_bottom_bonus()
     player1.print_scoreboard()
 

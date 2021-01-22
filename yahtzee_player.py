@@ -1,4 +1,8 @@
 class Player:
+
+    dash = '-' * 53
+    underscore = '_' * 53
+
     def __init__(self, name):
 
         self._name = name
@@ -62,28 +66,29 @@ class Player:
     def print_scoreboard(self):
         'Printing all the values in the scoreboard.'
 
-        adjust_len = 25
+        print(f'|{self.dash}|')
         for key, value in self._scoreboard.items():
-            print(f'\t{key:<{adjust_len}} : {value}')
-
+            print(f'|{key:>25} : {value:<25}|')
+        
         self._total_score = self.get_bottom_score() + self.get_top_score()
 
-        print('\n')
-        print(f'\t{"Total Upper Score":<{adjust_len}} : {self.get_top_score()}')
-        print(f'\t{"Total Bottom Score":<{adjust_len}} : {self.get_bottom_score()}')
-        print(f'\t{"GRAND TOTAL":<{adjust_len}} : {self._total_score}')
-        print('\n')
+        print(f'|{self.dash}|')
+        print(f'|{"Total Upper Score":>25} : {self.get_top_score():<25}|')
+        print(f'|{self.dash}|')
+        print(f'|{"Total Bottom Score":>25} : {self.get_bottom_score():<25}|')
+        print(f'|{self.dash}|')
+        print(f'|{"GRAND TOTAL":>25} : {self._total_score:<25}|')
+        print(f'|{self.underscore}|')
 
     # Logging - Could actually use decorator to make only one method
     def create_log(self,message_log,param1,param2):
-        k = param2
-        print('|-----------------------------------------------------|')
-        print(f'|   {message_log:<{k}}|')
-        print(f'|   {param1:<{k}}|')
-        print('|-----------------------------------------------------|')
+        print(f'|{self.dash}|')
+        print(f'|   {message_log:<{param2}}|')
+        print(f'|   {param1:<{param2}}|')
+        print(f'|{self.dash}|')
 
     def create_log2(self,parameter1,parameter2):
-        print('|_____________________________________________________|')
+        print(f'|{self.underscore}|')
         print('|                                                     |')
         print(f'|   {parameter1}{parameter2}            |')
-        print('|_____________________________________________________|')
+        print(f'|{self.underscore}|')
