@@ -22,6 +22,10 @@ GENERAL INFO
 
     - If the user tries to choose wrong game from the provided lists twice then last game in the list (dict actually) will be removed. Depending on the case the score either can be evaluated or a zero score is forced for that turn
 
+    - For chance game, if you have Yahtzee I believe user must be rewarded as getting Yahtzee which I did not know about it 
+    
+    - Game score table at the end is not sorted, I skipped to implement it.. It's reading the key-value pairs from a dict in the order of insertion means order of played games.
+
     Please feel free to improve the code, in player class a decorater function can be added for logging. Main class looks complicated a bit,  yes because I wanted to add new rules to make it fun but became a bit complicated.So decorators or extra methods can be used to make it look tidy.
 
     One more thing to improve is score table, I have just tried to use right justify but a better score table could be created
