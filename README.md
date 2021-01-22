@@ -16,15 +16,19 @@ GENERAL INFO
     In my game I added extra game as two pair into lower part of the game. 
     For players who love to test I added extra rules such as 
     
-    - When a collection is provided after last (3rd) roll if you don't Press Enter then the code removes your last game from the list (upper or lower list) however it will still consider/evaluate your final collection against the calculation logic
+    - When a roll collection is displayed after last (3rd) roll if you don't Press Enter then the code removes your last game from the list (upper or lower list) however it will still consider/evaluate your final collection against the calculation logic
 
     - If the user does not provide correct input they will be asked to enter correct input
 
     - If the user tries to choose wrong game from the provided lists twice then last game in the list (dict actually) will be removed. Depending on the case the score either can be evaluated or a zero score is forced for that turn
 
-    Please feel free to improve the code, in player class a decorater function can be added for logging. Main class looks complicated unlikiley yes because I wanted to add new rules to make it fun tt became a bit complicated and decorators or extra methods can be used to make it look tidy.
+    - For chance game, if you have Yahtzee I believe user must be rewarded as getting Yahtzee which I did not know about it 
+    
+    - Game score table at the end is not sorted, I skipped to implement it.. It's reading the key-value pairs from a dict in the order of insertion means order of played games.
 
-    One mor ething to improve is score table, I have just tried to use right justify but a better score table could be created
+    Please feel free to improve the code, in player class a decorater function can be added for logging. Main class looks complicated a bit,  yes because I wanted to add new rules to make it fun but became a bit complicated.So decorators or extra methods can be used to make it look tidy.
+
+    One more thing to improve is score table, I have just tried to use right justify but a better score table could be created
 
 
 PREREQUISITES
