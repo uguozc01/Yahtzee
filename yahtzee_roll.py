@@ -51,8 +51,7 @@ class Roll:
                             if is_entered_numbers_in_current_dice_list:
                                 # iterate through the list that user wants to keep (so remove them from current dice list)
                                 [self._current_dice_list.remove(value) for value in split_input_int if value in self._current_dice_list]
-                                for die in split_input_int:
-                                    self._current_kept_dice.append(die)
+                                [self._current_kept_dice.append(die) for die in split_input_int]
                             else:
                                 continue
                         else:
