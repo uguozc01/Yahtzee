@@ -38,17 +38,21 @@ def main():
                 if not player_name.replace(" ","").isalpha():
                     player_name = 'DUMMY_PLAYER'
                     player1 = Player(player_name)
-                    player1.create_log("Wellcome ",player_name,50)
+                    print_wellcome = player1.logging(player1.dash, "Wellcome ", 68)
+                    print_wellcome(player1.dash, player1.spaces, "Wellcome ", player_name, 68)
                 else:
                     player1 = Player(player_name)
-                    player1.create_log("Wellcome ",player_name,50)
+                    print_wellcome = player1.logging(player1.dash, "Wellcome ", 68)
+                    print_wellcome(player1.dash, player1.spaces, "Wellcome ", player_name, 68)
         else:
             player1 = Player(player_name)
-            player1.create_log("Wellcome ",player_name,50)
+            print_wellcome = player1.logging(player1.dash, "Wellcome ", 68)
+            print_wellcome(player1.dash, player1.spaces, "Wellcome ", player_name, 68)
     else:
         player_name = 'DUMMY_PLAYER'
         player1 = Player(player_name)
-        player1.create_log("Wellcome ",player_name,50)
+        print_wellcome = player1.logging(player1.dash, "Wellcome ", 68)
+        print_wellcome(player1.dash, player1.spaces, "Wellcome ", player_name, 68)
 
     dice1 = Roll()
     time.sleep(250 / 1000)
@@ -56,7 +60,8 @@ def main():
     # First (upper) part of the game starts here
     for i in range(len(upper)):
 
-        player1.create_log2("ROLLING THE DICE NOW  ------> GAME : ",i+1)
+        print_rolling_dice = player1.logging(player1.under_, player1.spaces, 33)
+        print_rolling_dice(player1.under_, player1.spaces, "ROLLING THE DICE NOW  ------------>  GAME : ", i+1, 33)
         # 1st roll:
         dice1.roll_dice()
         keep1 = dice1.keep_dice()
@@ -72,15 +77,19 @@ def main():
         # The final roll collection of dice to check:
         final_collection = dice1.get_dice_kept()
 
-        player1.create_log2("FINAL ROLL COLLECTION: ",final_collection)
-        player1.create_log("NOW WHICH GAME ", "DO YOU WANT TO CHOOSE?", 50)
+        print_final_collection = player1.logging(player1.under_, player1.spaces, 54)
+        print_final_collection(player1.under_, player1.spaces, "FINAL ROLL COLLECTION: ", final_collection, 54)
+        print_choose_game = player1.logging(player1.dash, player1.spaces, 62)
+        print_choose_game(player1.dash, player1.spaces, "NOW WHICH GAME ", "DO YOU WANT TO CHOOSE?", 62)
         player1.print_games(upper_comp)
 
         keep_game_no = input()
 
         if keep_game_no:
             if keep_game_no not in upper_comp.keys():
-                player1.create_log("THE CHOISE NOT IN THE LIST, ", "PLEASE CHOOSE AGAIN! ", 50)
+                print_bad_choice = player1.logging(player1.under_, player1.spaces, 49)
+                print_bad_choice(player1.under_, player1.spaces, "THE CHOISE NOT IN THE LIST, ", "PLEASE CHOOSE AGAIN! ", 49)
+
                 player1.print_games(upper_comp)
 
                 keep_game_no = input()
@@ -92,7 +101,8 @@ def main():
                         player1.add_rolled(lost_turn_value, check_score1)
                         player1.add_top_score(check_score1)
                         upper_comp.popitem()
-                        player1.create_log("YOU NOW LOST ONE OF YOUR GAME TURNS: ",lost_turn_value,50)
+                        print_lost_one_turn = player1.logging(player1.under_, player1.spaces, 40)
+                        print_lost_one_turn(player1.under_, player1.spaces, "YOU NOW LOST ONE OF YOUR GAME TURNS: ", lost_turn_value, 40)
                         continue
                     else:
                         print(f'\tYou Have Chosen  >----->  {upper_comp[keep_game_no]}\n\n')
@@ -110,8 +120,8 @@ def main():
                     player1.add_top_score(check_score1)
                     # Remove the played game from dict comprehension
                     upper_comp.popitem()
-
-                    player1.create_log("NOTHING ENTERED, YOUR LAST GAME IS NOW REMOVED, ", "UPDATED REMAINING GAME LIST:", 50)
+                    print_no_choice = player1.logging(player1.under_, player1.spaces, 29)
+                    print_no_choice(player1.under_, player1.spaces, "NOTHING ENTERED, YOUR LAST GAME IS NOW REMOVED, ", "REMAINING GAME LIST:", 29)
                     player1.print_games(upper_comp)
 
             else:
@@ -129,8 +139,8 @@ def main():
             player1.add_rolled(lost_turn_value, check_score1)
             player1.add_top_score(check_score1)
             upper_comp.popitem()
-
-            player1.create_log("NOTHING ENTERED, YOUR LAST GAME IS NOW REMOVED, ", "UPDATED REMAINING GAME LIST:", 50)
+            print_no_choice = player1.logging(player1.under_, player1.spaces, 29)
+            print_no_choice(player1.under_, player1.spaces, "NOTHING ENTERED, YOUR LAST GAME IS NOW REMOVED, ", "REMAINING GAME LIST:", 29)
             player1.print_games(upper_comp)
 
     player1.add_top_bonus()
@@ -139,7 +149,8 @@ def main():
     # Second (bottom) part of the game starts here
     for i in range(len(lower)):
 
-        player1.create_log2("ROLLING THE DICE NOW  ------> GAME : ",i+1)
+        print_rolling_dice = player1.logging(player1.under_, player1.spaces, 33)
+        print_rolling_dice(player1.under_, player1.spaces, "ROLLING THE DICE NOW  ------------>  GAME : ", i+1, 33)
 
         # 1st roll:
         dice1.roll_dice()
@@ -156,16 +167,18 @@ def main():
         # The final roll collection of dice to check:
         final_collection = dice1.get_dice_kept()
 
-        player1.create_log2("FINAL ROLL COLLECTION: ",final_collection)
-        player1.create_log("NOW WHICH GAME ", "DO YOU WANT TO CHOOSE?", 50)
+        print_final_collection = player1.logging(player1.under_, player1.spaces, 54)
+        print_final_collection(player1.under_, player1.spaces, "FINAL ROLL COLLECTION: ", final_collection, 54)
+        print_choose_game = player1.logging(player1.dash, player1.spaces, 62)
+        print_choose_game(player1.dash, player1.spaces, "NOW WHICH GAME ", "DO YOU WANT TO CHOOSE?", 62)
         player1.print_games(lower_comp)
-
 
         keep_game_no = input()
 
         if keep_game_no:
             if keep_game_no not in lower_comp.keys():
-                player1.create_log("THE CHOISE NOT IN THE LIST, ", "PLEASE CHOOSE AGAIN! ", 50)
+                print_bad_choice = player1.logging(player1.under_, player1.spaces, 49)
+                print_bad_choice(player1.under_, player1.spaces, "THE CHOISE NOT IN THE LIST, ", "PLEASE CHOOSE AGAIN! ", 49)
                 player1.print_games(lower_comp)
 
                 keep_game_no = input()
@@ -176,7 +189,8 @@ def main():
                         player1.add_rolled(lost_turn_value, check_score2)
                         player1.add_bottom_score(check_score2)
                         lower_comp.popitem()
-                        player1.create_log("YOU NOW LOST ONE OF YOUR GAME TURNS: ",lost_turn_value, 50)
+                        print_lost_one_turn = player1.logging(player1.under_, player1.spaces, 40)
+                        print_lost_one_turn(player1.under_, player1.spaces, "YOU NOW LOST ONE OF YOUR GAME TURNS: ", lost_turn_value, 40)
                         continue
                     else:
                         print(f'\tYou Have Chosen  >----->  {lower_comp[keep_game_no]}\n\n')
@@ -192,8 +206,8 @@ def main():
                     player1.add_rolled(lost_turn_value, check_score2)
                     player1.add_bottom_score(check_score2)
                     lower_comp.popitem()
-
-                    player1.create_log("NOTHING ENTERED, YOUR LAST GAME IS NOW REMOVED, ", "UPDATED REMAINING GAME LIST:", 50)
+                    print_no_choice = player1.logging(player1.under_, player1.spaces, 29)
+                    print_no_choice(player1.under_, player1.spaces, "NOTHING ENTERED, YOUR LAST GAME IS NOW REMOVED, ", "REMAINING GAME LIST:", 29)
                     player1.print_games(lower_comp)
 
             else:
@@ -210,8 +224,8 @@ def main():
             player1.add_rolled(lost_turn_value, check_score2)
             player1.add_bottom_score(check_score2)
             lower_comp.popitem()
-
-            player1.create_log("NOTHING ENTERED, YOUR LAST GAME IS NOW REMOVED, ", "UPDATED REMAINING GAME LIST:", 50)
+            print_no_choice = player1.logging(player1.under_, player1.spaces, 29)
+            print_no_choice(player1.under_, player1.spaces, "NOTHING ENTERED, YOUR LAST GAME IS NOW REMOVED, ", "REMAINING GAME LIST:", 29)
             player1.print_games(lower_comp)
 
     player1.add_bottom_bonus()
