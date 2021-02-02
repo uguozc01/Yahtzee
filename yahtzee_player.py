@@ -1,186 +1,95 @@
-import random
-import re
-from collections import Counter 
+class Player:
 
-class Roll:
-    empty = ' ' *80
+    dash = '-' * 80
+    under_ = '_' * 80
+    spaces = ' ' * 80
 
-    def __init__(self):
+    def __init__(self, name):
 
-        self._current_dice_list = []
-        self._current_kept_dice = []
+        self._name = name
+        self._scoreboard = {}
+        self._top_score = 0
+        self._bottom_score = 0
+        self._bonus_bottom = 0
+        self._total_score = 0
 
-    def roll_dice(self):
-        'Returns random integer values between 1 to 6 and returns list'
+    def add_rolled(self, rolled_type , value):
+        'Adding scores to the player scoreboard'
 
-        self._current_kept_dice.clear()
-        self._current_dice_list = [random.randint(1,6) for die in range(0,5)]
-        print (f'|   You rolled       {str(self._current_dice_list):<60}|')
-        return self._current_dice_list
+        self._scoreboard[rolled_type] = value
 
-    def keep_dice(self):
-        '''
-        Rolls dice again depending on returned dice
-        Stores the dice in a separate list which user wants to keep and Returns list
-        '''        
-        while True:
-            ask_input = "Which dice do you want to keep (E.g: 2,2,4)?"
-            keep_input = input(f'|   {str(ask_input):<77}|')
-            print(f'|{self.empty}|')
+    def add_top_score(self,value):
+        'Adding a rolled score to the top part score.'
 
-            if keep_input:
-                normalised = keep_input.replace(" ","")
-                if len(normalised) > 9 or not normalised.replace(",","").isdigit() or normalised[-1] == ',' or (len(re.findall(',', normalised)) and (len(re.findall(',', normalised)) != ((len(normalised) - 1) / 2))):
-                    print('   Please enter correct input e.g. : 2,2,4 ')
-                    continue
+        self._top_score += value
 
-                elif len(normalised) <= 9 and len(normalised) >= 1 and normalised.replace(",","").isdigit() and normalised[-1] != ',':
-                    split_input = normalised.split(',')
-                    try:
-                        split_input_int = [int(item) for item in split_input if all(0 < int(x) < 7 for x in split_input)]
-                    except ValueError:
-                        continue
-                    else:
-                        if len(split_input_int):
-                            # get counts of two lists
-                            count_first = Counter(self._current_dice_list) 
-                            count_second = Counter(split_input_int) 
-                            # check if count of elements exists in first list
-                            is_entered_numbers_in_current_dice_list = all(count_second[key] <= count_first[key] for key in count_second)
+    def add_top_bonus(self):
+        'Checks for top part score. If it is high enough, a bonus is added to the scoreboard.'
 
-                            if is_entered_numbers_in_current_dice_list:
-                                # iterate through the list that user wants to keep (so remove them from current dice list)
-                                [self._current_dice_list.remove(value) for value in split_input_int if value in self._current_dice_list]
-                                for die in split_input_int:
-                                    self._current_kept_dice.append(die)
-                            else:
-                                continue
-                        else:
-                            continue
-                    return self._current_dice_list
-                else:
-                    print('   Welldone, you find a possibility to fail all input verification checks!')
-                    continue
-            else:
-                # if the user press Enter without choosing any numbers, keep all:
-                return self._current_dice_list
+        #keep this a variable for easy updates.
+        needed_score_for_bonus = 63
 
-    def roll_again(self, dice_list):
-        '''
-        Returns current dice list.
-        This time it uses the returned list after the player keeps some dice.
-        '''
-        self._current_dice_list = [random.randint(1,6) for die in range(0,(len(dice_list)))]
-        print (f'|   You rolled       {str(self._current_dice_list):<60}|')
+        if self.get_top_score() >= needed_score_for_bonus:
+            self._scoreboard['TOP_BONUS'] = 50
+        else:
+            self._scoreboard['TOP_BONUS'] = 0
 
-        return self._current_dice_list
+        self._top_bonus = self._scoreboard['TOP_BONUS']
 
-    def get_current_dice(self):
-        'Returns the current dice as a list'
+    def get_top_score(self):
+        'Returning current top part score'
+        
+        return self._top_score
 
-        return self._current_dice_list
+    def add_bottom_score(self,value):
+        'Now calculate the bottom (2nd part) of the game score . Add a rolled score to the top part score.'
 
-    def get_dice_kept(self):
-        'Returns the current dice kept as a list'
+        self._bottom_score += value
+    
+    def add_bottom_bonus(self):
+        'Checkfor bottom score. If it is high enough, a bonus is added to the scoreboard.'
 
-        return self._current_kept_dice
+        #keep this a variable for easy updates.
+        needed_score_for_bonus_bottom = 80
 
-    def forced_keep(self,dice_list):
-        'Forces to keep the last roll'
+        if self.get_bottom_score() >= needed_score_for_bonus_bottom:
+            self._scoreboard['BOTTOM_BONUS'] = 100
+        else:
+            self._scoreboard['BOTTOM_BONUS'] = 0
 
-        for die in dice_list:
-            self._current_kept_dice.append(die)
+        self._bottom_bonus = self._scoreboard['BOTTOM_BONUS']
 
-    #this section focuses on the checkup of dice values.
+    def get_bottom_score(self):
+        'Returning current top part score'
 
-    def upper_calc(self,dice_list,check_value):
-        '''
-        This method returns the roll score which is based on single value checks (checks only an integer).
-        This is for the top part of the game where you roll aces, twos etc. Returns a list
-        '''
-        roll_score = 0
-        roll_score = sum([die for die in dice_list if die == check_value])
-        return roll_score
+        return self._bottom_score
 
-    def lower_calc(self,dice_list,check_value):
-        '''
-        This method returns the roll score which is based on multiple value checks (checks multiple integer).
-        This is for the lower part of the game
-        '''
-        roll_score = 0
-        if (check_value == '2 PAIRS' and self.is_twoPairs(dice_list)) or (check_value == '3 OF A KIND' and self.is_threeKind(dice_list)) or (check_value == '4 OF A KIND' and self.is_fourKind(dice_list)) or (check_value == 'CHANCE' and self.take_aChance(dice_list)):
-            roll_score = sum(dice_list)
-        if check_value == 'FULL HOUSE' and self.is_fullHouse(dice_list):
-            roll_score = 25
-        if check_value == 'LOW STRAIGHT' and self.is_lowStraight(dice_list):
-            roll_score = 30
-        if check_value == 'HIGH STRAIGHT' and self.is_highStraight(dice_list):
-            roll_score = 40
-        if check_value == 'YAHTZEE' and self.isYahtzee(dice_list):
-            roll_score = 50
-        if check_value == '':
-            roll_score = 0
+    def print_scoreboard(self):
 
-        return roll_score
+        print(f'|{self.dash}|')
+        for key, value in self._scoreboard.items():
+            print(f'|{key:>38} : {value:<39}|')
+        
+        self._total_score = self.get_bottom_score() + self.get_top_score()
 
-    def is_twoPairs(self, dice_list):
+        print(f'|{self.dash}|')
+        print(f'|{"Total Upper Score":>38} : {self.get_top_score():<39}|')
+        print(f'|{self.dash}|')
+        print(f'|{"Total Bottom Score":>38} : {self.get_bottom_score():<39}|')
+        print(f'|{self.dash}|')
+        print(f'|{"GRAND TOTAL":>38} : {self._total_score:<39}|')
+        print(f'|{self.under_}|')
 
-        dice_list.sort()
-        if (dice_list[0] == dice_list[1] and dice_list[2] == dice_list[3]) or (dice_list[0] == dice_list[1] and dice_list[3] == dice_list[4]) or (dice_list[1] == dice_list[2] and dice_list[3] == dice_list[4]):
-           return True
-        return False
+    def logging(self, p1, p2, p3):
 
-    def is_threeKind(self, dice_list):
+        def wrapper(p1, p2, m1, m2, p3):
+            print(f'|{p1}|\n|{p2}|')
+            print(f'|   {str(m1)}{str(m2):<{p3}}|')
+            print(f'|{p1}|')
+        return wrapper
 
-        dice_list.sort()
-        if dice_list[0] == dice_list[2] or dice_list[1] == dice_list[3] or dice_list[2] == dice_list[4]:
-            return True
-        return False
+    def print_games(self, game_dict):
 
-    def is_fourKind(self, dice_list):
-
-        dice_list.sort()
-        if dice_list[0] == dice_list[3] or dice_list[1] == dice_list[4]:
-            return True
-        return False
-
-    def is_fullHouse(self,dice_list):
-
-        dice_list.sort()
-
-        #if the set returns 2 for the list, we might have a full house.
-        if (len(set(dice_list))) != 2:
-            return False
-
-        # we have to check to differentiate it from four of a kind as it also returns 2:
-        elif dice_list[0] != dice_list[3] and dice_list[1] != dice_list[4]:
-            return True
-
-        return False
-
-    def is_lowStraight(self, dice_list):
-
-        dice_list.sort()
-        if (len(set(dice_list)) == 4 and ((dice_list[0] == 1 and  dice_list[4] == 4) or (dice_list[0] == 2 and  dice_list[4] == 5) or (dice_list[0] == 3 and  dice_list[4] == 6))) or (len(set(dice_list)) == 5 and ((dice_list[0] == 1 and dice_list[3] == 4) or (dice_list[1] == 3 and dice_list[4] == 6))):
-            return True
-
-        return False
-
-    def is_highStraight(self, dice_list):
-
-        dice_list.sort()
-        if len(set(dice_list)) == 5 and ( (dice_list[0] == 1 and dice_list[4] == 5) or (dice_list[0] == 2 and dice_list[4] == 6) ):
-            return True
-
-        return False
-
-    def isYahtzee(self, dice_list):
-
-        if len(set(dice_list)) == 1:
-            return True
-
-        return False
-
-    def take_aChance(self, dice_list):
-        'no need to check anything'
-        return True
+        for key, value in game_dict.items():
+            print(f'|{value:>38} : {key:<39}|')
+            print(f'|{self.dash}|')
