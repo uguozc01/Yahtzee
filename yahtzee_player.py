@@ -1,7 +1,8 @@
 class Player:
 
-    dash = '-' * 53
-    underscore = '_' * 53
+    dash = '-' * 80
+    under_ = '_' * 80
+    spaces = ' ' * 80
 
     def __init__(self, name):
 
@@ -67,34 +68,28 @@ class Player:
 
         print(f'|{self.dash}|')
         for key, value in self._scoreboard.items():
-            print(f'|{key:>25} : {value:<25}|')
+            print(f'|{key:>38} : {value:<39}|')
         
         self._total_score = self.get_bottom_score() + self.get_top_score()
 
         print(f'|{self.dash}|')
-        print(f'|{"Total Upper Score":>25} : {self.get_top_score():<25}|')
+        print(f'|{"Total Upper Score":>38} : {self.get_top_score():<39}|')
         print(f'|{self.dash}|')
-        print(f'|{"Total Bottom Score":>25} : {self.get_bottom_score():<25}|')
+        print(f'|{"Total Bottom Score":>38} : {self.get_bottom_score():<39}|')
         print(f'|{self.dash}|')
-        print(f'|{"GRAND TOTAL":>25} : {self._total_score:<25}|')
-        print(f'|{self.underscore}|')
+        print(f'|{"GRAND TOTAL":>38} : {self._total_score:<39}|')
+        print(f'|{self.under_}|')
 
-    def create_log(self,message_log,param1,param2):
-        
-        print(f'|{self.dash}|')
-        print(f'|   {message_log:<{param2}}|')
-        print(f'|   {param1:<{param2}}|')
-        print(f'|{self.dash}|')
+    def logging(self, p1, p2, p3):
 
-    def create_log2(self,parameter1,parameter2):
-
-        print(f'|{self.underscore}|')
-        print('|                                                     |')
-        print(f'|   {parameter1}{parameter2}            |')
-        print(f'|{self.underscore}|')
+        def wrapper(p1, p2, m1, m2, p3):
+            print(f'|{p1}|\n|{p2}|')
+            print(f'|   {str(m1)}{str(m2):<{p3}}|')
+            print(f'|{p1}|')
+        return wrapper
 
     def print_games(self, game_dict):
 
         for key, value in game_dict.items():
-            print(f'|{value:>25} : {key:<25}|')
+            print(f'|{value:>38} : {key:<39}|')
             print(f'|{self.dash}|')
