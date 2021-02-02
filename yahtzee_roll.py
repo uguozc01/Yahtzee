@@ -3,19 +3,19 @@ import re
 from collections import Counter 
 
 class Roll:
+    empty = ' ' *80
+
     def __init__(self):
 
         self._current_dice_list = []
         self._current_kept_dice = []
-
-    #this section focuses on the rolling of dice logic.
 
     def roll_dice(self):
         'Returns random integer values between 1 to 6 and returns list'
 
         self._current_kept_dice.clear()
         self._current_dice_list = [random.randint(1,6) for die in range(0,5)]
-        print (f'|  You rolled     {self._current_dice_list} !                   |')
+        print (f'|   You rolled       {str(self._current_dice_list):<60}|')
         return self._current_dice_list
 
     def keep_dice(self):
@@ -24,14 +24,14 @@ class Roll:
         Stores the dice in a separate list which user wants to keep and Returns list
         '''        
         while True:
-
-            keep_input = input('|  Which dice do you want to keep (E.g: 2,2,4)? ')
-            print('|                                                     |')
+            ask_input = "Which dice do you want to keep (E.g: 2,2,4)?"
+            keep_input = input(f'|   {str(ask_input):<77}|')
+            print(f'|{self.empty}|')
 
             if keep_input:
                 normalised = keep_input.replace(" ","")
                 if len(normalised) > 9 or not normalised.replace(",","").isdigit() or normalised[-1] == ',' or (len(re.findall(',', normalised)) and (len(re.findall(',', normalised)) != ((len(normalised) - 1) / 2))):
-                    print('Please enter correct input e.g. : 2,2,4 ')
+                    print('   Please enter correct input e.g. : 2,2,4 ')
                     continue
 
                 elif len(normalised) <= 9 and len(normalised) >= 1 and normalised.replace(",","").isdigit() and normalised[-1] != ',':
@@ -51,14 +51,15 @@ class Roll:
                             if is_entered_numbers_in_current_dice_list:
                                 # iterate through the list that user wants to keep (so remove them from current dice list)
                                 [self._current_dice_list.remove(value) for value in split_input_int if value in self._current_dice_list]
-                                [self._current_kept_dice.append(die) for die in split_input_int]
+                                for die in split_input_int:
+                                    self._current_kept_dice.append(die)
                             else:
                                 continue
                         else:
                             continue
                     return self._current_dice_list
                 else:
-                    print('Welldone, you find a possibility to fail all input verification checks!')
+                    print('   Welldone, you find a possibility to fail all input verification checks!')
                     continue
             else:
                 # if the user press Enter without choosing any numbers, keep all:
@@ -70,7 +71,7 @@ class Roll:
         This time it uses the returned list after the player keeps some dice.
         '''
         self._current_dice_list = [random.randint(1,6) for die in range(0,(len(dice_list)))]
-        print (f'|  You rolled     {self._current_dice_list} ! ')
+        print (f'|   You rolled       {str(self._current_dice_list):<60}|')
 
         return self._current_dice_list
 
