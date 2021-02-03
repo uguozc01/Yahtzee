@@ -30,6 +30,7 @@ def main():
     lower_comp = {k:v for (k,v) in lower.items()}
 
     # Create a player and a dice to play the game
+    dice1 = Roll()
     player_name = str(input('Please enter your name by using only letters!:'))
     if player_name:
         if not player_name.replace(" ","").isalpha():
@@ -38,30 +39,29 @@ def main():
                 if not player_name.replace(" ","").isalpha():
                     player_name = 'DUMMY_PLAYER'
                     player1 = Player(player_name)
-                    print_wellcome = player1.logging(player1.dash, "Wellcome ", 68)
-                    print_wellcome(player1.dash, player1.spaces, "Wellcome ", player_name, 68)
+                    print_wellcome = player1.logging(player1.under_, dice1.empty, 68)
+                    print_wellcome("WELLCOME ", player_name)
                 else:
                     player1 = Player(player_name)
-                    print_wellcome = player1.logging(player1.dash, "Wellcome ", 68)
-                    print_wellcome(player1.dash, player1.spaces, "Wellcome ", player_name, 68)
+                    print_wellcome = player1.logging(player1.under_, dice1.empty, 68)
+                    print_wellcome("WELLCOME ", player_name)
         else:
             player1 = Player(player_name)
-            print_wellcome = player1.logging(player1.dash, "Wellcome ", 68)
-            print_wellcome(player1.dash, player1.spaces, "Wellcome ", player_name, 68)
+            print_wellcome = player1.logging(player1.under_, dice1.empty, 68)
+            print_wellcome("WELLCOME ", player_name)
     else:
         player_name = 'DUMMY_PLAYER'
         player1 = Player(player_name)
-        print_wellcome = player1.logging(player1.dash, "Wellcome ", 68)
-        print_wellcome(player1.dash, player1.spaces, "Wellcome ", player_name, 68)
+        print_wellcome = player1.logging(player1.under_, dice1.empty, 68)
+        print_wellcome("WELLCOME ", player_name)
 
-    dice1 = Roll()
     time.sleep(250 / 1000)
 
     # First (upper) part of the game starts here
     for i in range(len(upper)):
 
         print_rolling_dice = player1.logging(player1.under_, player1.spaces, 33)
-        print_rolling_dice(player1.under_, player1.spaces, "ROLLING THE DICE NOW  ------------>  GAME : ", i+1, 33)
+        print_rolling_dice("ROLLING THE DICE NOW  ------------>  GAME : ", i+1)
         # 1st roll:
         dice1.roll_dice()
         keep1 = dice1.keep_dice()
@@ -78,9 +78,9 @@ def main():
         final_collection = dice1.get_dice_kept()
 
         print_final_collection = player1.logging(player1.under_, player1.spaces, 54)
-        print_final_collection(player1.under_, player1.spaces, "FINAL ROLL COLLECTION: ", final_collection, 54)
+        print_final_collection("FINAL ROLL COLLECTION: ", final_collection)
         print_choose_game = player1.logging(player1.dash, player1.spaces, 62)
-        print_choose_game(player1.dash, player1.spaces, "NOW WHICH GAME ", "DO YOU WANT TO CHOOSE?", 62)
+        print_choose_game("NOW WHICH GAME ", "DO YOU WANT TO CHOOSE?")
         player1.print_games(upper_comp)
 
         keep_game_no = input()
@@ -88,7 +88,7 @@ def main():
         if keep_game_no:
             if keep_game_no not in upper_comp.keys():
                 print_bad_choice = player1.logging(player1.under_, player1.spaces, 49)
-                print_bad_choice(player1.under_, player1.spaces, "THE CHOISE NOT IN THE LIST, ", "PLEASE CHOOSE AGAIN! ", 49)
+                print_bad_choice("THE CHOISE NOT IN THE LIST, ", "PLEASE CHOOSE AGAIN! ")
 
                 player1.print_games(upper_comp)
 
@@ -102,7 +102,7 @@ def main():
                         player1.add_top_score(check_score1)
                         upper_comp.popitem()
                         print_lost_one_turn = player1.logging(player1.under_, player1.spaces, 40)
-                        print_lost_one_turn(player1.under_, player1.spaces, "YOU NOW LOST ONE OF YOUR GAME TURNS: ", lost_turn_value, 40)
+                        print_lost_one_turn("YOU NOW LOST ONE OF YOUR GAME TURNS: ", lost_turn_value)
                         continue
                     else:
                         print(f'\tYou Have Chosen  >----->  {upper_comp[keep_game_no]}\n\n')
@@ -121,7 +121,7 @@ def main():
                     # Remove the played game from dict comprehension
                     upper_comp.popitem()
                     print_no_choice = player1.logging(player1.under_, player1.spaces, 29)
-                    print_no_choice(player1.under_, player1.spaces, "NOTHING ENTERED, YOUR LAST GAME IS NOW REMOVED, ", "REMAINING GAME LIST:", 29)
+                    print_no_choice("NOTHING ENTERED, YOUR LAST GAME IS NOW REMOVED, ", "REMAINING GAME LIST:")
                     player1.print_games(upper_comp)
 
             else:
@@ -140,7 +140,7 @@ def main():
             player1.add_top_score(check_score1)
             upper_comp.popitem()
             print_no_choice = player1.logging(player1.under_, player1.spaces, 29)
-            print_no_choice(player1.under_, player1.spaces, "NOTHING ENTERED, YOUR LAST GAME IS NOW REMOVED, ", "REMAINING GAME LIST:", 29)
+            print_no_choice("NOTHING ENTERED, YOUR LAST GAME IS NOW REMOVED, ", "REMAINING GAME LIST:")
             player1.print_games(upper_comp)
 
     player1.add_top_bonus()
@@ -150,7 +150,7 @@ def main():
     for i in range(len(lower)):
 
         print_rolling_dice = player1.logging(player1.under_, player1.spaces, 33)
-        print_rolling_dice(player1.under_, player1.spaces, "ROLLING THE DICE NOW  ------------>  GAME : ", i+1, 33)
+        print_rolling_dice("ROLLING THE DICE NOW  ------------>  GAME : ", i+1)
 
         # 1st roll:
         dice1.roll_dice()
@@ -168,9 +168,9 @@ def main():
         final_collection = dice1.get_dice_kept()
 
         print_final_collection = player1.logging(player1.under_, player1.spaces, 54)
-        print_final_collection(player1.under_, player1.spaces, "FINAL ROLL COLLECTION: ", final_collection, 54)
+        print_final_collection("FINAL ROLL COLLECTION: ", final_collection)
         print_choose_game = player1.logging(player1.dash, player1.spaces, 62)
-        print_choose_game(player1.dash, player1.spaces, "NOW WHICH GAME ", "DO YOU WANT TO CHOOSE?", 62)
+        print_choose_game("NOW WHICH GAME ", "DO YOU WANT TO CHOOSE?")
         player1.print_games(lower_comp)
 
         keep_game_no = input()
@@ -178,7 +178,7 @@ def main():
         if keep_game_no:
             if keep_game_no not in lower_comp.keys():
                 print_bad_choice = player1.logging(player1.under_, player1.spaces, 49)
-                print_bad_choice(player1.under_, player1.spaces, "THE CHOISE NOT IN THE LIST, ", "PLEASE CHOOSE AGAIN! ", 49)
+                print_bad_choice("THE CHOISE NOT IN THE LIST, ", "PLEASE CHOOSE AGAIN! ")
                 player1.print_games(lower_comp)
 
                 keep_game_no = input()
@@ -190,7 +190,7 @@ def main():
                         player1.add_bottom_score(check_score2)
                         lower_comp.popitem()
                         print_lost_one_turn = player1.logging(player1.under_, player1.spaces, 40)
-                        print_lost_one_turn(player1.under_, player1.spaces, "YOU NOW LOST ONE OF YOUR GAME TURNS: ", lost_turn_value, 40)
+                        print_lost_one_turn("YOU NOW LOST ONE OF YOUR GAME TURNS: ", lost_turn_value)
                         continue
                     else:
                         print(f'\tYou Have Chosen  >----->  {lower_comp[keep_game_no]}\n\n')
@@ -207,7 +207,7 @@ def main():
                     player1.add_bottom_score(check_score2)
                     lower_comp.popitem()
                     print_no_choice = player1.logging(player1.under_, player1.spaces, 29)
-                    print_no_choice(player1.under_, player1.spaces, "NOTHING ENTERED, YOUR LAST GAME IS NOW REMOVED, ", "REMAINING GAME LIST:", 29)
+                    print_no_choice("NOTHING ENTERED, YOUR LAST GAME IS NOW REMOVED, ", "REMAINING GAME LIST:")
                     player1.print_games(lower_comp)
 
             else:
@@ -225,7 +225,7 @@ def main():
             player1.add_bottom_score(check_score2)
             lower_comp.popitem()
             print_no_choice = player1.logging(player1.under_, player1.spaces, 29)
-            print_no_choice(player1.under_, player1.spaces, "NOTHING ENTERED, YOUR LAST GAME IS NOW REMOVED, ", "REMAINING GAME LIST:", 29)
+            print_no_choice("NOTHING ENTERED, YOUR LAST GAME IS NOW REMOVED, ", "REMAINING GAME LIST:")
             player1.print_games(lower_comp)
 
     player1.add_bottom_bonus()
