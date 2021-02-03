@@ -82,7 +82,7 @@ class Player:
 
     def logging(self, p1, p2, p3):
 
-        def wrapper(p1, p2, m1, m2, p3):
+        def wrapper(m1, m2):
             print(f'|{p1}|\n|{p2}|')
             print(f'|   {str(m1)}{str(m2):<{p3}}|')
             print(f'|{p1}|')
