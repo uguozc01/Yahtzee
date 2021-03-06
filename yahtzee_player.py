@@ -70,7 +70,7 @@ class Player:
         for key, value in self._scoreboard.items():
             print(f'|{key:>38} : {value:<39}|')
         
-        self._total_score = self.get_bottom_score() + self.get_top_score()
+        self._total_score = self.get_bottom_score() + self._bottom_bonus + self.get_top_score() + self._top_bonus
 
         print(f'|{self.dash}|')
         print(f'|{"Total Upper Score":>38} : {self.get_top_score():<39}|')
